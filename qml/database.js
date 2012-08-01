@@ -11,9 +11,9 @@ function init()
         tx.executeSql("CREATE TABLE IF NOT EXISTS settings(key TEXT UNIQUE, value TEXT);");
         tx.executeSql("CREATE TABLE IF NOT EXISTS accounts(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name TEXT, url TEXT, private_key TEXT);");
 
-        //tx.executeSql("INSERT INTO accounts VALUES (?, ?, ?, ?);", [1, "Artur's Traq", "", ""]);
-        //tx.executeSql("INSERT INTO accounts VALUES (?, ?, ?, ?);", [2, "Official Traq", "", ""]);
-        //tx.executeSql("INSERT INTO accounts VALUES (?, ?, ?, ?);", [3, "Lotem ipsum dolor sit amet long text is long as shit", "", ""]);
+        //check for default settings
+        if(!setting("theme"))
+            setSetting("theme", "default");
     });
 }
 

@@ -7,16 +7,9 @@ qmls.sources = qml/*.qml qml/*.js
 qmls.path = qml
 images.sources = qml/images/*
 images.path = qml/images
-DEPLOYMENT += qmls images
+DEPLOYMENT  += qmls images
 
-OTHER_FILES += \
-    qml/main.qml \
-    qml/SplashPage.qml \
-    qml/AccountsPage.qml \
-    qml/database.js \
-    qml/theme.js \
-    qml/EditAccountPage.qml \
-    qml/NewAccountPage.qml
+OTHER_FILES += qml/*.qml qml/*.js
 
 symbian {
     TARGET.UID3 = 0xE1AB3181
