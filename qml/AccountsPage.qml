@@ -29,14 +29,14 @@ Page {
         ToolButton {
             flat: true
             iconSource: "images/toolbar-add.svg"
-            onClicked: pageStack.push(addAccountPage)
+            onClicked: pageStack.push(newAccountPage)
         }
     }
 
     onVisibleChanged: updateAccounts()
 
-    AddAccountPage {
-        id: addAccountPage
+    NewAccountPage {
+        id: newAccountPage
     }
 
     EditAccountPage {

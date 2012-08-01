@@ -15,8 +15,8 @@ OTHER_FILES += \
     qml/AccountsPage.qml \
     qml/database.js \
     qml/theme.js \
-    qml/AddAccountPage.qml \
-    qml/EditAccountPage.qml
+    qml/EditAccountPage.qml \
+    qml/NewAccountPage.qml
 
 symbian {
     TARGET.UID3 = 0xE1AB3181

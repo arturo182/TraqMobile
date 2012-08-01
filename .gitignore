@@ -4,3 +4,7 @@ Makefile*
 TraqMobile_*
 debug/*
 release/*
+/*.loc
+/*.rss
+/*.cache
+/*.inf

@@ -42,7 +42,7 @@ Page {
         Text {
             id: headerText
             color: Theme.colors.headerText
-            text: "Add a Traq:"
+            text: "New Traq:"
             anchors.leftMargin: 20
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
@@ -127,8 +127,8 @@ Page {
             }
 
             Button {
-                id: addButton
-                text: "Add Traq"
+                id: createButton
+                text: "Create"
                 onClicked: {
                     errorText.text = "";
 
