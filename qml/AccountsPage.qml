@@ -71,7 +71,7 @@ Page {
 
     Rectangle {
         id: backgroundRectangle
-        color: Theme.colors.pageBackground
+        color: Theme.colors["default"].pageBackground
         anchors.top: headerRectangle.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -95,15 +95,15 @@ Page {
 
                 anchors.fill: parent
                 border.width: 1
-                border.color: Theme.colors.listItemText
+                border.color: Theme.colors["default"].listItemText
                 gradient: Gradient {
                     GradientStop {
                         position: 0.00;
-                        color: Theme.colors.listItemGradientStart;
+                        color: Theme.colors["default"].listItemGradientStart;
                     }
                     GradientStop {
                         position: 1.00;
-                        color: Theme.colors.listItemGradientStop;
+                        color: Theme.colors["default"].listItemGradientStop;
                     }
                 }
 
@@ -117,7 +117,7 @@ Page {
                     elide: Text.ElideRight
                     anchors.leftMargin: 20
                     verticalAlignment: Text.AlignVCenter
-                    color: Theme.colors.listItemText
+                    color: Theme.colors["default"].listItemText
                 }
 
                 Image {
@@ -148,14 +148,14 @@ Page {
     Rectangle {
         id: headerRectangle
         height: 50
-        color: Theme.colors.headerBackground
+        color: Theme.colors["default"].headerBackground
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: parent.left
 
         Text {
             id: headerText
-            color: Theme.colors.headerText
+            color: Theme.colors["default"].headerText
             text: "Your Traqs:"
             anchors.leftMargin: 20
             anchors.fill: parent
@@ -169,9 +169,9 @@ Page {
         id: listRectangle
 
         height: Math.min(accountsModel.count * 50, backgroundRectangle.height - 60)
-        color: Theme.colors.listItemText
+        color: Theme.colors["default"].listItemText
         border.width: 2
-        border.color: Theme.colors.listItemText
+        border.color: Theme.colors["default"].listItemText
         anchors.top: headerRectangle.bottom
         anchors.topMargin: 30
         anchors.right: parent.right

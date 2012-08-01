@@ -26,7 +26,7 @@ Page {
 
     Rectangle {
         id: backgroundRectangle
-        color: Theme.colors.pageBackground
+        color: Theme.colors["default"].pageBackground
         anchors.top: headerRectangle.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -36,14 +36,14 @@ Page {
     Rectangle {
         id: headerRectangle
         height: 50
-        color: Theme.colors.headerBackground
+        color: Theme.colors["default"].headerBackground
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: parent.left
 
         Text {
             id: headerText
-            color: Theme.colors.headerText
+            color: Theme.colors["default"].headerText
             text: "Edit Traq:"
             anchors.leftMargin: 20
             anchors.fill: parent
@@ -77,15 +77,15 @@ Page {
                 id: errorRectangle
                 width: parent.width * 0.8
                 height: errorText.height + errorText.anchors.topMargin * 2
-                color: Theme.colors.errorBackground
+                color: Theme.colors["default"].errorBackground
                 visible: (errorText.text != "")
                 border.width: 2
-                border.color: Theme.colors.errorBorder
+                border.color: Theme.colors["default"].errorBorder
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 Text {
                     id: errorText
-                    color: Theme.colors.errorText
+                    color: Theme.colors["default"].errorText
                     anchors.topMargin: 5
                     anchors.rightMargin: 10
                     anchors.leftMargin: 10
@@ -93,13 +93,13 @@ Page {
                     anchors.right: parent.right
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    font.pixelSize: Theme.fonts.listItem
+                    font.pixelSize: Theme.fonts.big
                 }
             }
 
             Label {
                 id: nameLabel
-                color: Theme.colors.listItemText
+                color: Theme.colors["default"].listItemText
                 text: "Name:"
             }
             TextField {
@@ -109,7 +109,7 @@ Page {
 
             Label {
                 id: urlLabel
-                color: Theme.colors.listItemText
+                color: Theme.colors["default"].listItemText
                 text: "Url:"
             }
             TextField {
@@ -120,7 +120,7 @@ Page {
 
             Label {
                 id: apiKeyLabel
-                color: Theme.colors.listItemText
+                color: Theme.colors["default"].listItemText
                 text: "API key:"
             }
             TextField {
