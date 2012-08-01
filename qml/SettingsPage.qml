@@ -5,13 +5,10 @@ import "database.js" as Database
 
 BasePage {
     id: root
-    headerText: "New Traq"
+    headerText: "Settings"
 
     onVisibleChanged: {
-        nameField.text = "";
-        urlField.text = "";
-        apiKeyField.text = "";
-        nameField.focus = true;
+        themeList.focus = true;
         errorText.text = "";
     }
 
@@ -66,59 +63,31 @@ BasePage {
             }
 
             Text {
-                id: nameLabel
+                id: themeLabel
                 color: Theme.colors["default"].listItemText
-                text: "Name:"
+                text: "Theme:"
             }
-            TextField {
-                id: nameField
+            SelectionListItem {
+                id: themeList
                 width: parent.width
-            }
+                title: (themeDialog.selectedIndex >= 0) ? themeDialog.model.get(themeDialog.selectedIndex).name : "Please select"
 
-            Text {
-                id: urlLabel
-                color: Theme.colors["default"].listItemText
-                text: "Url:"
-            }
-            TextField {
-                id: urlField
-                width: parent.width
-                placeholderText: "http://"
-            }
+                onClicked: themeDialog.open()
 
-            Text {
-                id: apiKeyLabel
-                color: Theme.colors["default"].listItemText
-                text: "API key:"
-            }
-            TextField {
-                id: apiKeyField
-                width: parent.width
+                SelectionDialog {
+                    id: themeDialog
+                    titleText: "Select one of the values"
+                    selectedIndex: (Database.setting("theme") == "default") ? 0 : -1
+                    model: ListModel {
+                        ListElement { name: "default" }
+                    }
+                }
             }
 
             Button {
                 id: createButton
-                text: "Create"
+                text: "Save"
                 onClicked: {
-                    errorText.text = "";
-
-                    if(nameField.text == "") {
-                        errorText.text = "Name cannot be blank."
-                    }
-
-                    if(urlField.text == "") {
-                        if(errorText.text != "")
-                            errorText.text += "\n";
-
-                        errorText.text += "Url cannot be blank."
-                    }
-
-                    if(errorText.text != "") {
-                        formFlickable.contentY = 0;
-                        return;
-                    }
-
-                    Database.addAccount(nameField.text, urlField.text, apiKeyField.text);
                     pageStack.pop();
                 }
             }

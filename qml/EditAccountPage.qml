@@ -3,10 +3,11 @@ import com.nokia.symbian 1.1
 import "theme.js" as Theme
 import "database.js" as Database
 
-Page {
+BasePage {
     property string accountId
 
     id: root
+    headerText: "Edit Traq"
 
     function setAccount(account)
     {
@@ -24,45 +25,14 @@ Page {
         }
     }
 
-    Rectangle {
-        id: backgroundRectangle
-        color: Theme.colors["default"].pageBackground
-        anchors.top: headerRectangle.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-    }
-
-    Rectangle {
-        id: headerRectangle
-        height: 50
-        color: Theme.colors["default"].headerBackground
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.left: parent.left
-
-        Text {
-            id: headerText
-            color: Theme.colors["default"].headerText
-            text: "Edit Traq:"
-            anchors.leftMargin: 20
-            anchors.fill: parent
-            verticalAlignment: Text.AlignVCenter
-            font.bold: true
-            font.pixelSize: 20
-        }
-    }
-
     Flickable {
         id: formFlickable
         clip: true
         contentHeight: formColumn.height * 1.2
         boundsBehavior: Flickable.StopAtBounds
         flickableDirection: Flickable.VerticalFlick
-        anchors.top: headerRectangle.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        anchors.fill: parent
+        anchors.topMargin: Theme.sizes.headerHeight
 
         Column {
             id: formColumn
@@ -93,11 +63,11 @@ Page {
                     anchors.right: parent.right
                     anchors.left: parent.left
                     anchors.top: parent.top
-                    font.pixelSize: Theme.fonts.big
+                    font.pixelSize: 0
                 }
             }
 
-            Label {
+            Text {
                 id: nameLabel
                 color: Theme.colors["default"].listItemText
                 text: "Name:"
@@ -107,7 +77,7 @@ Page {
                 width: parent.width
             }
 
-            Label {
+            Text {
                 id: urlLabel
                 color: Theme.colors["default"].listItemText
                 text: "Url:"
@@ -118,7 +88,7 @@ Page {
                 placeholderText: "http://"
             }
 
-            Label {
+            Text {
                 id: apiKeyLabel
                 color: Theme.colors["default"].listItemText
                 text: "API key:"

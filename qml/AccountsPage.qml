@@ -3,7 +3,7 @@ import com.nokia.symbian 1.1
 import "theme.js" as Theme
 import "database.js" as Database
 
-Page {
+BasePage {
     signal accountChosen(int id)
 
     function updateAccounts()
@@ -13,6 +13,8 @@ Page {
     }
 
     id: root
+    headerText: "Your Traqs:"
+
     tools: ToolBarLayout {
         ToolButton {
             flat: true
@@ -20,11 +22,11 @@ Page {
             onClicked: Qt.quit()
         }
 
-        /*ToolButton {
+        ToolButton {
             flat: true
             iconSource: "images/toolbar-settings.svg"
-            onClicked: Qt.quit()
-        }*/
+            onClicked: pageStack.push(settingsPage)
+        }
 
         ToolButton {
             flat: true
@@ -41,6 +43,10 @@ Page {
 
     EditAccountPage {
         id: editAccountPage
+    }
+
+    SettingsPage {
+        id: settingsPage
     }
 
     ContextMenu {
@@ -67,15 +73,6 @@ Page {
                 }
             }
         }
-    }
-
-    Rectangle {
-        id: backgroundRectangle
-        color: Theme.colors["default"].pageBackground
-        anchors.top: headerRectangle.bottom
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
     }
 
     ListModel {
@@ -146,34 +143,14 @@ Page {
     }
 
     Rectangle {
-        id: headerRectangle
-        height: 50
-        color: Theme.colors["default"].headerBackground
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.left: parent.left
-
-        Text {
-            id: headerText
-            color: Theme.colors["default"].headerText
-            text: "Your Traqs:"
-            anchors.leftMargin: 20
-            anchors.fill: parent
-            verticalAlignment: Text.AlignVCenter
-            font.bold: true
-            font.pixelSize: 20
-        }
-    }
-
-    Rectangle {
         id: listRectangle
 
-        height: Math.min(accountsModel.count * 50, backgroundRectangle.height - 60)
+        height: Math.min(accountsModel.count * 50, root.height - 60)
         color: Theme.colors["default"].listItemText
         border.width: 2
         border.color: Theme.colors["default"].listItemText
-        anchors.top: headerRectangle.bottom
-        anchors.topMargin: 30
+        anchors.top: parent.top
+        anchors.topMargin: 30 + Theme.sizes.headerHeight
         anchors.right: parent.right
         anchors.rightMargin: 30
         anchors.left: parent.left

@@ -22,3 +22,7 @@ var fonts = {
     normal: 14,
     small: 10
 };
+
+var sizes = {
+    headerHeight: 50
+};
