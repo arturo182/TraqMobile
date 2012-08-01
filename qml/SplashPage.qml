@@ -5,7 +5,7 @@ Item {
 
     property alias image: splash.source
     property int timeout: 1000
-    property int fadeout: 700
+    property int fadeout: 1000
 
     signal finished
 

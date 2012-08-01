@@ -11,6 +11,7 @@ Page {
         urlField.text = "";
         apiKeyField.text = "";
         nameField.focus = true;
+        errorText.text = "";
     }
 
     tools: ToolBarLayout {
@@ -51,9 +52,9 @@ Page {
     }
 
     Flickable {
-        id: flickable1
+        id: formFlickable
         clip: true
-        contentHeight: formColumn.height
+        contentHeight: formColumn.height * 1.2
         boundsBehavior: Flickable.StopAtBounds
         flickableDirection: Flickable.VerticalFlick
         anchors.top: headerRectangle.bottom
@@ -63,15 +64,36 @@ Page {
 
         Column {
             id: formColumn
-            x: 25
-            y: 25
             anchors.topMargin: 25
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
             anchors.left: parent.left
             spacing: 6
             anchors.margins: 25
+
+            Rectangle {
+                id: errorRectangle
+                width: parent.width * 0.8
+                height: errorText.height + errorText.anchors.topMargin * 2
+                color: Theme.colors.errorBackground
+                visible: (errorText.text != "")
+                border.width: 2
+                border.color: Theme.colors.errorBorder
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                Text {
+                    id: errorText
+                    color: Theme.colors.errorText
+                    anchors.topMargin: 5
+                    anchors.rightMargin: 10
+                    anchors.leftMargin: 10
+                    wrapMode: Text.WordWrap
+                    anchors.right: parent.right
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    font.pixelSize: Theme.fonts.listItem
+                }
+            }
 
             Label {
                 id: nameLabel
@@ -108,10 +130,28 @@ Page {
                 id: addButton
                 text: "Add Traq"
                 onClicked: {
+                    errorText.text = "";
+
+                    if(nameField.text == "") {
+                        errorText.text = "Name cannot be blank."
+                    }
+
+                    if(urlField.text == "") {
+                        if(errorText.text != "")
+                            errorText.text += "\n";
+
+                        errorText.text += "Url cannot be blank."
+                    }
+
+                    if(errorText.text != "") {
+                        formFlickable.contentY = 0;
+                        return;
+                    }
+
                     Database.addAccount(nameField.text, urlField.text, apiKeyField.text);
                     pageStack.pop();
                 }
-        }
+            }
     }
     }
 }

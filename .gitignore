@@ -1,0 +1,6 @@
+Makefile*
+*.pro.user
+*.sis
+TraqMobile_*
+debug/*
+release/*
