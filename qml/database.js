@@ -75,6 +75,9 @@ function addAccount(name, url, api_key)
     var db = database();
     var res = false;
 
+    if(url.substr(-1) != "/")
+        url += "/";
+
     db.transaction(function(tx) {
         var result = tx.executeSql("INSERT INTO accounts(name, url, private_key) VALUES (?, ?, ?);", [name, url, api_key]);
         if(result.rowsAffected > 0)
@@ -88,6 +91,9 @@ function modifyAccount(id, name, url, api_key)
 {
     var db = database();
     var res = false;
+
+    if(url.substr(-1) != "/")
+        url += "/";
 
     db.transaction(function(tx) {
         var result = tx.executeSql("UPDATE accounts SET name = ?, url = ?, private_key = ? WHERE id = ?;", [name, url, api_key, id]);
