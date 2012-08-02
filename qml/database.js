@@ -28,7 +28,7 @@ function setSetting(key, value)
 function setting(key)
 {
     var db = database();
-    var res = 0;
+    var res = null;
 
     db.transaction(function(tx) {
         var result = tx.executeSql("SELECT value FROM settings WHERE key = ?;", [key]);

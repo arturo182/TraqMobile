@@ -1,8 +1,6 @@
 #include <QDeclarativeEngine>
 #include <QDeclarativeView>
 #include <QApplication>
-#include <QDebug>
-#include <QDir>
 
 int main(int argc, char **argv)
 {
