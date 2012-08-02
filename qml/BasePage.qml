@@ -27,6 +27,7 @@ Page {
 
         Text {
             id: headerTxt
+            elide: Text.ElideRight
             color: Theme.colors["default"].headerText
             anchors.leftMargin: 20
             anchors.fill: parent
