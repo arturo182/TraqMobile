@@ -5,7 +5,7 @@ import "database.js" as Database
 
 BasePage {
     id: root
-    headerText: "New Traq"
+    headerText: "New Account"
 
     onVisibleChanged: {
         nameField.text = "";

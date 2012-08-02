@@ -12,7 +12,7 @@ BasePage {
         Database.loadAccounts(accountsModel);
     }
 
-    headerText: "Your Traqs:"
+    headerText: "Your Accounts:"
 
     tools: ToolBarLayout {
         ToolButton {

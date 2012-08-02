@@ -10,7 +10,7 @@ BasePage {
     property alias accountPrivateKey: privateKeyField.text
 
     id: root
-    headerText: "Edit Traq"
+    headerText: "Edit Account"
 
     onAccountNameChanged: {
         nameField.focus = true;
