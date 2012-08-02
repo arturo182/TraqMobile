@@ -136,6 +136,7 @@ BasePage {
 
                     onClicked: {
                         var account = accountsModel.get(index);
+                        projectsPage.accountId = account.account_id;
                         projectsPage.accountName = account.name;
                         projectsPage.accountUrl = account.url;
                         pageStack.push(projectsPage);

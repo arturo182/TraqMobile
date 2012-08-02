@@ -5,13 +5,14 @@ import "database.js" as Database
 import "api.js" as Api
 
 BasePage {
+    property string accountId
     property string accountUrl
     property string accountName
 
     function updateProjects()
     {
         projectsModel.clear();
-        Api.loadProjects(projectsModel, accountUrl);
+        Api.loadProjects(projectsModel, accountId);
     }
 
     id: root
