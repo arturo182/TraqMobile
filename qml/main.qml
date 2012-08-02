@@ -1,6 +1,7 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "database.js" as Database
+import "api.js" as Api
 
 PageStackWindow {
     id: window
@@ -8,10 +9,26 @@ PageStackWindow {
     showStatusBar: false
     showToolBar: true
 
+    Component.onCompleted: {
+        Api.pageStack = pageStack;
+    }
+
     AccountsPage {
         id: accountsPage
 
         Component.onCompleted: Database.init()
+    }
+
+    BusyIndicator {
+        height: 60
+        width: 60
+
+        visible: pageStack.busy
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        smooth: true
+        running: true
     }
 
     SplashPage {

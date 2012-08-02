@@ -2,11 +2,16 @@
 
 Qt.include("database.js")
 
+var pageStack = null;
+
 function ajaxGet(url, callback)
 {
     var req = new XMLHttpRequest();
     req.open("GET", url);
-    req.onreadystatechange = function() { callback(req); };
+    req.onreadystatechange = function() {
+        callback(req);
+        pageStack.busy = false;
+    };
     req.send();
 }
 
