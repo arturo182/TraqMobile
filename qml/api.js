@@ -10,9 +10,9 @@ function ajaxGet(url, callback)
     req.send();
 }
 
-function loadProjects(model, id)
+function accountUrl(id)
 {
-    var url;
+    var url = "";
 
     var db = database();
     db.transaction(function(tx) {
@@ -21,7 +21,13 @@ function loadProjects(model, id)
             url = result.rows.item(0).url;
     });
 
-    if(url == '')
+    return url;
+}
+
+function loadProjects(model, id)
+{
+    var url = accountUrl(id);
+    if(url == "")
         return;
 
     ajaxGet(url + "projects.json", function(req) {
@@ -32,6 +38,25 @@ function loadProjects(model, id)
                 var project = response[i];
 
                 model.append(project);
+            }
+        }
+    });
+}
+
+function loadTickets(model, id, slug)
+{
+    var url = accountUrl(id);
+    if(url == "")
+        return;
+
+    ajaxGet(url + slug + "/tickets.json", function(req) {
+        if(req.readyState == XMLHttpRequest.DONE) {
+            var response = JSON.parse(req.responseText);
+
+            for(var i in response) {
+                var ticket = response[i];
+
+                model.append(ticket);
             }
         }
     });
