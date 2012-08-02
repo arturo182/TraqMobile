@@ -5,9 +5,22 @@ Qt.include("database.js")
 function ajaxGet(url, callback)
 {
     var req = new XMLHttpRequest();
-    req.open("GET", url, true);
+    req.open("GET", url);
     req.onreadystatechange = function() { callback(req); };
     req.send();
+}
+
+function ajaxFillModel(url, model)
+{
+    ajaxGet(url, function(req) {
+        if(req.readyState == XMLHttpRequest.DONE) {
+            var response = JSON.parse(req.responseText);
+
+            for(var i in response) {
+                model.append(response[i]);
+            }
+        }
+    });
 }
 
 function accountUrl(id)
@@ -30,17 +43,7 @@ function loadProjects(model, id)
     if(url == "")
         return;
 
-    ajaxGet(url + "projects.json", function(req) {
-        if(req.readyState == XMLHttpRequest.DONE) {
-            var response = JSON.parse(req.responseText);
-
-            for(var i in response) {
-                var project = response[i];
-
-                model.append(project);
-            }
-        }
-    });
+    ajaxFillModel(url + "projects.json", model);
 }
 
 function loadTickets(model, id, slug)
@@ -49,15 +52,5 @@ function loadTickets(model, id, slug)
     if(url == "")
         return;
 
-    ajaxGet(url + slug + "/tickets.json", function(req) {
-        if(req.readyState == XMLHttpRequest.DONE) {
-            var response = JSON.parse(req.responseText);
-
-            for(var i in response) {
-                var ticket = response[i];
-
-                model.append(ticket);
-            }
-        }
-    });
+    ajaxFillModel(url + slug + "/tickets.json", model);
 }
