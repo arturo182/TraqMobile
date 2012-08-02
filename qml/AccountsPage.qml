@@ -60,7 +60,7 @@ BasePage {
                 text: "Edit"
                 onClicked: {
                     var account = accountsModel.get(accountsList.currentIndex);
-                    editAccountPage.accountId = account.account_id;
+                    editAccountPage.accountId = account.id;
                     editAccountPage.accountName = account.name;
                     editAccountPage.accountUrl = account.url;
                     editAccountPage.accountPrivateKey = account.private_key;
@@ -74,6 +74,7 @@ BasePage {
                 onClicked: {
                     Database.deleteAccount(accountsList.currentId);
                     updateAccounts();
+
                 }
             }
         }
@@ -136,14 +137,15 @@ BasePage {
 
                     onClicked: {
                         var account = accountsModel.get(index);
-                        projectsPage.accountId = account.account_id;
+                        projectsPage.accountId = account.id;
                         projectsPage.accountName = account.name;
                         projectsPage.accountUrl = account.url;
                         pageStack.push(projectsPage);
                     }
 
                     onPressAndHold: {
-                        accountsList.currentId = account_id;
+                        var account = accountsModel.get(index);
+                        accountsList.currentId = account.id;
                         accountsList.currentIndex = index;
                         accountMenu.open();
                     }

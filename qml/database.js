@@ -20,15 +20,9 @@ function init()
 function setSetting(key, value)
 {
     var db = database();
-    var res = false;
-
     db.transaction(function(tx) {
-        var result = tx.executeSql("INSERT OR REPLACE INTO settings VALUES (?, ?);", [key, value]);
-        if(result.rowsAffected > 0)
-            res = true;
+        tx.executeSql("INSERT OR REPLACE INTO settings VALUES (?, ?);", [key, value]);
     });
-
-    return res;
 }
 
 function setting(key)
@@ -45,72 +39,51 @@ function setting(key)
     return res;
 }
 
-function loadAccounts(model)
+function fillModel(sql, model)
 {
     var db = database();
-    var res = false;
 
     db.transaction(function(tx) {
-        var result = tx.executeSql("SELECT * FROM accounts ORDER BY name ASC;");
+        var result = tx.executeSql(sql);
         if(result.rows.length > 0) {
             for(var i = 0; i < result.rows.length; ++i) {
-                var account = result.rows.item(i);
-                model.append({
-                    "account_id": account.id,
-                    "name": account.name,
-                    "url": account.url,
-                    "private_key": account.private_key
-                });
+                model.append(result.rows.item(i));
             }
-
-            res = true;
         }
     });
+}
 
-    return res;
+function loadAccounts(model)
+{
+    fillModel("SELECT * FROM accounts ORDER BY name ASC;", model);
 }
 
 function addAccount(name, url, api_key)
 {
     var db = database();
-    var res = false;
-
     if(url.substr(-1) != "/")
         url += "/";
 
     db.transaction(function(tx) {
-        var result = tx.executeSql("INSERT INTO accounts(name, url, private_key) VALUES (?, ?, ?);", [name, url, api_key]);
-        if(result.rowsAffected > 0)
-            res = true;
+        tx.executeSql("INSERT INTO accounts(name, url, private_key) VALUES (?, ?, ?);", [name, url, api_key]);
     });
-
-    return res;
 }
 
 function modifyAccount(id, name, url, api_key)
 {
     var db = database();
-    var res = false;
-
     if(url.substr(-1) != "/")
         url += "/";
 
     db.transaction(function(tx) {
-        var result = tx.executeSql("UPDATE accounts SET name = ?, url = ?, private_key = ? WHERE id = ?;", [name, url, api_key, id]);
-        if(result.rowsAffected > 0)
-            res = true;
+        tx.executeSql("UPDATE accounts SET name = ?, url = ?, private_key = ? WHERE id = ?;", [name, url, api_key, id]);
     });
-
-    return res;
 }
 
 function deleteAccount(id)
 {
     var db = database();
-
     db.transaction(function(tx) {
         tx.executeSql("DELETE FROM accounts WHERE id = ?;", [id]);
     });
-
-    return true;
 }
