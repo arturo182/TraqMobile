@@ -18,8 +18,33 @@ BasePage {
 
     tools: ToolBarLayout {
         ToolButton {
-            flat: true
-            iconSource: "images/toolbar-back.svg"
+            text: "Save"
+            onClicked: {
+                errorText.text = "";
+
+                if(accountName == "") {
+                    errorText.text = "Name cannot be blank."
+                }
+
+                if(accountUrl == "") {
+                    if(errorText.text != "")
+                        errorText.text += "\n";
+
+                    errorText.text += "Url cannot be blank."
+                }
+
+                if(errorText.text != "") {
+                    formFlickable.contentY = 0;
+                    return;
+                }
+
+                Database.modifyAccount(accountId, accountName, accountUrl, accountPrivateKey);
+                pageStack.pop();
+            }
+        }
+
+        ToolButton {
+            text: "Cancel"
             onClicked: pageStack.pop()
         }
     }
@@ -95,33 +120,6 @@ BasePage {
             TextField {
                 id: privateKeyField
                 width: parent.width
-            }
-
-            Button {
-                id: saveButton
-                text: "Save"
-                onClicked: {
-                    errorText.text = "";
-
-                    if(accountName == "") {
-                        errorText.text = "Name cannot be blank."
-                    }
-
-                    if(accountUrl == "") {
-                        if(errorText.text != "")
-                            errorText.text += "\n";
-
-                        errorText.text += "Url cannot be blank."
-                    }
-
-                    if(errorText.text != "") {
-                        formFlickable.contentY = 0;
-                        return;
-                    }
-
-                    Database.modifyAccount(accountId, accountName, accountUrl, accountPrivateKey);
-                    pageStack.pop();
-                }
             }
         }
     }

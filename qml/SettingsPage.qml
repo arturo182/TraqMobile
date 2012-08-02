@@ -14,8 +14,12 @@ BasePage {
 
     tools: ToolBarLayout {
         ToolButton {
-            flat: true
-            iconSource: "images/toolbar-back.svg"
+            text: "Save"
+            onClicked: pageStack.pop()
+        }
+
+        ToolButton {
+            text: "Cancel"
             onClicked: pageStack.pop()
         }
     }
@@ -71,6 +75,7 @@ BasePage {
                 id: themeList
                 width: parent.width
                 title: (themeDialog.selectedIndex >= 0) ? themeDialog.model.get(themeDialog.selectedIndex).name : "Please select"
+                platformInverted: true
 
                 onClicked: themeDialog.open()
 
@@ -81,14 +86,6 @@ BasePage {
                     model: ListModel {
                         ListElement { name: "default" }
                     }
-                }
-            }
-
-            Button {
-                id: createButton
-                text: "Save"
-                onClicked: {
-                    pageStack.pop();
                 }
             }
         }

@@ -17,8 +17,33 @@ BasePage {
 
     tools: ToolBarLayout {
         ToolButton {
-            flat: true
-            iconSource: "images/toolbar-back.svg"
+            text: "Create"
+            onClicked: {
+                errorText.text = "";
+
+                if(nameField.text == "") {
+                    errorText.text = "Name cannot be blank."
+                }
+
+                if(urlField.text == "") {
+                    if(errorText.text != "")
+                        errorText.text += "\n";
+
+                    errorText.text += "Url cannot be blank."
+                }
+
+                if(errorText.text != "") {
+                    formFlickable.contentY = 0;
+                    return;
+                }
+
+                Database.addAccount(nameField.text, urlField.text, apiKeyField.text);
+                pageStack.pop();
+            }
+        }
+
+        ToolButton {
+            text: "Cancel"
             onClicked: pageStack.pop()
         }
     }
@@ -94,33 +119,6 @@ BasePage {
             TextField {
                 id: apiKeyField
                 width: parent.width
-            }
-
-            Button {
-                id: createButton
-                text: "Create"
-                onClicked: {
-                    errorText.text = "";
-
-                    if(nameField.text == "") {
-                        errorText.text = "Name cannot be blank."
-                    }
-
-                    if(urlField.text == "") {
-                        if(errorText.text != "")
-                            errorText.text += "\n";
-
-                        errorText.text += "Url cannot be blank."
-                    }
-
-                    if(errorText.text != "") {
-                        formFlickable.contentY = 0;
-                        return;
-                    }
-
-                    Database.addAccount(nameField.text, urlField.text, apiKeyField.text);
-                    pageStack.pop();
-                }
             }
         }
     }
