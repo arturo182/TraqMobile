@@ -2,94 +2,45 @@ import QtQuick 1.1
 import com.nokia.symbian 1.1
 import "theme.js" as Theme
 import "database.js" as Database
+import "api.js" as Api
 
 BasePage {
-    id: root
+    property string accountUrl
+    property string accountName
 
-    function updateAccounts()
+    function updateProjects()
     {
-        accountsModel.clear();
-        Database.loadAccounts(accountsModel);
+        projectsModel.clear();
+        Api.loadProjects(projectsModel, accountUrl);
     }
 
-    headerText: "Your Traqs:"
+    id: root
+    headerText: accountName + " / Projects"
 
     tools: ToolBarLayout {
         ToolButton {
             flat: true
             iconSource: "images/toolbar-back.svg"
-            onClicked: Qt.quit()
-        }
-
-        ToolButton {
-            flat: true
-            iconSource: "images/toolbar-settings.svg"
-            onClicked: pageStack.push(settingsPage)
-        }
-
-        ToolButton {
-            flat: true
-            iconSource: "images/toolbar-add.svg"
-            onClicked: pageStack.push(newAccountPage)
+            onClicked: pageStack.pop()
         }
     }
 
-    onVisibleChanged: updateAccounts()
-
-    NewAccountPage {
-        id: newAccountPage
-    }
-
-    EditAccountPage {
-        id: editAccountPage
-    }
-
-    SettingsPage {
-        id: settingsPage
-    }
-
-    ProjectsPage {
-        id: projectsPage
-    }
-
-    ContextMenu {
-        id: accountMenu
-
-        MenuLayout {
-            MenuItem {
-                text: "Edit"
-                onClicked: {
-                    var account = accountsModel.get(accountsList.currentIndex);
-                    editAccountPage.accountId = account.account_id;
-                    editAccountPage.accountName = account.name;
-                    editAccountPage.accountUrl = account.url;
-                    editAccountPage.accountPrivateKey = account.private_key;
-
-                    pageStack.push(editAccountPage);
-                }
-            }
-
-            MenuItem {
-                text: "Delete"
-                onClicked: {
-                    Database.deleteAccount(accountsList.currentId);
-                    updateAccounts();
-                }
-            }
-        }
+    onVisibleChanged: {
+        if(visible)
+            updateProjects();
     }
 
     ListModel {
-        id: accountsModel
+        id: projectsModel
     }
 
     Component {
-        id: accountsDelegate
+        id: projectsDelegate
 
         Item {
             id: listItem
             height: 50
-            width: accountsList.width
+            width: projectsList.width
 
             Rectangle {
                 id: itemRectangle
@@ -135,16 +86,16 @@ BasePage {
                     anchors.fill: parent
 
                     onClicked: {
-                        var account = accountsModel.get(index);
-                        projectsPage.accountName = account.name;
-                        projectsPage.accountUrl = account.url;
-                        pageStack.push(projectsPage);
+                        //var account = accountsModel.get(index);
+                        //projectsPage.accountName = account.name;
+                        //projectsPage.accountUrl = account.url;
+                        //pageStack.push(projectsPage);
                     }
 
                     onPressAndHold: {
-                        accountsList.currentId = account_id;
-                        accountsList.currentIndex = index;
-                        accountMenu.open();
+                        //accountsList.currentId = account_id;
+                        //accountsList.currentIndex = index;
+                        //accountMenu.open();
                     }
                 }
 
@@ -155,7 +106,7 @@ BasePage {
     Rectangle {
         id: listRectangle
 
-        height: Math.min(accountsModel.count * 50, root.height - 60)
+        height: Math.min(projectsModel.count * 50, root.height - 60)
         color: Theme.colors["default"].listItemText
         border.width: 2
         border.color: Theme.colors["default"].listItemText
@@ -169,15 +120,15 @@ BasePage {
         ListView {
             property string currentId
 
-            id: accountsList
+            id: projectsList
             boundsBehavior: Flickable.StopAtBounds
 
             anchors.fill: parent
             cacheBuffer: height
             focus: true
             clip: true
-            model: accountsModel
-            delegate: accountsDelegate
+            model: projectsModel
+            delegate: projectsDelegate
         }
     }
 }

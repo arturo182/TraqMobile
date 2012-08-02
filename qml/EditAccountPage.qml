@@ -5,16 +5,15 @@ import "database.js" as Database
 
 BasePage {
     property string accountId
+    property alias accountName: nameField.text
+    property alias accountUrl: urlField.text
+    property alias accountPrivateKey: privateKeyField.text
 
     id: root
     headerText: "Edit Traq"
 
-    function setAccount(account)
-    {
-        accountId = account.account_id;
-        nameField.text = account.name;
-        urlField.text = account.url;
-        apiKeyField.text = account.private_key;
+    onAccountNameChanged: {
+        nameField.focus = true;
     }
 
     tools: ToolBarLayout {
@@ -94,7 +93,7 @@ BasePage {
                 text: "API key:"
             }
             TextField {
-                id: apiKeyField
+                id: privateKeyField
                 width: parent.width
             }
 
@@ -104,11 +103,11 @@ BasePage {
                 onClicked: {
                     errorText.text = "";
 
-                    if(nameField.text == "") {
+                    if(accountName == "") {
                         errorText.text = "Name cannot be blank."
                     }
 
-                    if(urlField.text == "") {
+                    if(accountUrl == "") {
                         if(errorText.text != "")
                             errorText.text += "\n";
 
@@ -120,7 +119,7 @@ BasePage {
                         return;
                     }
 
-                    Database.modifyAccount(accountId, nameField.text, urlField.text, apiKeyField.text);
+                    Database.modifyAccount(accountId, accountName, accountUrl, accountPrivateKey);
                     pageStack.pop();
                 }
             }
