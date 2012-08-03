@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "theme.js" as Theme
 import "database.js" as Database
 
 BasePage {
@@ -89,7 +88,7 @@ BasePage {
 
         Item {
             id: listItem
-            height: 50
+            height: theme.size.smallListItemHeight
             width: accountsList.width
 
             Rectangle {
@@ -97,15 +96,35 @@ BasePage {
 
                 anchors.fill: parent
                 border.width: 1
-                border.color: Theme.colors["default"].listItemText
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: Theme.colors["default"].listItemGradientStart;
+                border.color: theme.color.normalText
+                gradient: theme.gradient.listItemNormal
+                states: [
+                    State {
+                        name: "pressed"
+
+                        PropertyChanges {
+                            target: highlightRectangle
+                            opacity: 1.0
+                        }
                     }
-                    GradientStop {
-                        position: 1.00;
-                        color: Theme.colors["default"].listItemGradientStop;
+                ]
+
+                Rectangle {
+                    id: highlightRectangle
+
+                    opacity: 0.0
+                    anchors.fill: parent
+                    border.width: 1
+                    border.color: theme.color.normalText
+                    gradient: Gradient {
+                        GradientStop {
+                            position: 0.00
+                            color: "red"
+                        }
+                        GradientStop {
+                            position: 1.00
+                            color: "blue"
+                        }
                     }
                 }
 
@@ -117,16 +136,16 @@ BasePage {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     elide: Text.ElideRight
-                    anchors.leftMargin: 20
+                    anchors.leftMargin: theme.padding.large
                     verticalAlignment: Text.AlignVCenter
-                    color: Theme.colors["default"].listItemText
+                    color: theme.color.normalText
                 }
 
                 Image {
                     id: indicatorImage
                     width: sourceSize.width
                     height: sourceSize.height
-                    anchors.rightMargin: 10
+                    anchors.rightMargin: theme.padding.medium
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     source: "images/icon-list-indicator-blue.svg"
@@ -134,6 +153,14 @@ BasePage {
 
                 MouseArea {
                     anchors.fill: parent
+
+                    onPressed: {
+                        itemRectangle.state = "pressed";
+                    }
+
+                    onReleased: {
+                        itemRectangle.state = "";
+                    }
 
                     onClicked: {
                         var account = accountsModel.get(index);
@@ -158,16 +185,16 @@ BasePage {
     Rectangle {
         id: listRectangle
 
-        height: Math.min(accountsModel.count * 50, root.height - 60)
-        color: Theme.colors["default"].listItemText
+        height: Math.min(accountsModel.count * theme.size.smallListItemHeight, root.height - theme.size.headerHeight - 2 * theme.padding.large)
+        color: theme.color.normalText
         border.width: 2
-        border.color: Theme.colors["default"].listItemText
+        border.color: theme.color.normalText
         anchors.top: parent.top
-        anchors.topMargin: 30 + Theme.sizes.headerHeight
+        anchors.topMargin: theme.size.headerHeight + theme.padding.large
         anchors.right: parent.right
-        anchors.rightMargin: 30
+        anchors.rightMargin: theme.padding.large
         anchors.left: parent.left
-        anchors.leftMargin: 30
+        anchors.leftMargin: theme.padding.large
 
         ListView {
             property string currentId

@@ -1,6 +1,5 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "theme.js" as Theme
 import "database.js" as Database
 import "api.js" as Api
 
@@ -9,8 +8,10 @@ BasePage {
     property string accountUrl
     property string accountName
 
-    function updateProjects()
+    function refreshProjects()
     {
+        pageStack.busy = true;
+
         projectsModel.clear();
         Api.loadProjects(projectsModel, accountId);
     }
@@ -24,11 +25,22 @@ BasePage {
             iconSource: "images/toolbar-back.svg"
             onClicked: pageStack.pop()
         }
+
+        ToolButton {
+            flat: true
+            iconSource: "images/toolbar-refresh.svg"
+            onClicked: refreshProjects()
+        }
     }
 
-    onVisibleChanged: {
-        if(visible)
-            updateProjects();
+    onStatusChanged: {
+        if(status == PageStatus.Activating) {
+            refreshProjects();
+        }
+    }
+
+    TicketsPage {
+        id: ticketsPage
     }
 
     ListModel {
@@ -40,7 +52,7 @@ BasePage {
 
         Item {
             id: listItem
-            height: 50
+            height: theme.size.smallListItemHeight
             width: projectsList.width
 
             Rectangle {
@@ -48,17 +60,8 @@ BasePage {
 
                 anchors.fill: parent
                 border.width: 1
-                border.color: Theme.colors["default"].listItemText
-                gradient: Gradient {
-                    GradientStop {
-                        position: 0.00;
-                        color: Theme.colors["default"].listItemGradientStart;
-                    }
-                    GradientStop {
-                        position: 1.00;
-                        color: Theme.colors["default"].listItemGradientStop;
-                    }
-                }
+                border.color: theme.color.normalText
+                gradient: theme.gradient.listItemNormal
 
                 Text {
                     id: nameText
@@ -70,7 +73,7 @@ BasePage {
                     elide: Text.ElideRight
                     anchors.leftMargin: 20
                     verticalAlignment: Text.AlignVCenter
-                    color: Theme.colors["default"].listItemText
+                    color: theme.color.normalText
                 }
 
                 Image {
@@ -87,10 +90,11 @@ BasePage {
                     anchors.fill: parent
 
                     onClicked: {
-                        //var account = accountsModel.get(index);
-                        //projectsPage.accountName = account.name;
-                        //projectsPage.accountUrl = account.url;
-                        //pageStack.push(projectsPage);
+                        var project = projectsModel.get(index);
+                        ticketsPage.accountId = accountId;
+                        ticketsPage.projectName = project.name;
+                        ticketsPage.projectSlug = project.slug;
+                        pageStack.push(ticketsPage);
                     }
 
                     onPressAndHold: {
@@ -107,16 +111,16 @@ BasePage {
     Rectangle {
         id: listRectangle
 
-        height: Math.min(projectsModel.count * 50, root.height - 60)
-        color: Theme.colors["default"].listItemText
+        height: Math.min(projectsModel.count * theme.size.smallListItemHeight, root.height - theme.size.headerHeight - 2 * theme.padding.large)
+        color: theme.color.normalText
         border.width: 2
-        border.color: Theme.colors["default"].listItemText
+        border.color: theme.color.normalText
         anchors.top: parent.top
-        anchors.topMargin: 30 + Theme.sizes.headerHeight
+        anchors.topMargin: theme.size.headerHeight + theme.padding.large
         anchors.right: parent.right
-        anchors.rightMargin: 30
+        anchors.rightMargin: theme.padding.large
         anchors.left: parent.left
-        anchors.leftMargin: 30
+        anchors.leftMargin: theme.padding.large
 
         ListView {
             property string currentId

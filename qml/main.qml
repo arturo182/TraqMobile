@@ -11,12 +11,11 @@ PageStackWindow {
 
     Component.onCompleted: {
         Api.pageStack = pageStack;
+        Database.init();
     }
 
     AccountsPage {
         id: accountsPage
-
-        Component.onCompleted: Database.init()
     }
 
     BusyIndicator {

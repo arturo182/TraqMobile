@@ -1,16 +1,18 @@
 import QtQuick 1.1
 import com.nokia.symbian 1.1
-import "theme.js" as Theme
 import "database.js" as Database
 
 Page {
     property alias headerText: headerTxt.text
+    property alias theme: themeInst
 
     id: root
 
+    TraqTheme { id: themeInst }
+
     Rectangle {
         id: backgroundRectangle
-        color: Theme.colors["default"].pageBackground
+        color: theme.color.pageBackground
         anchors.top: headerRectangle.bottom
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -19,8 +21,8 @@ Page {
 
     Rectangle {
         id: headerRectangle
-        height: Theme.sizes.headerHeight
-        color: Theme.colors["default"].headerBackground
+        height: theme.size.headerHeight
+        color: theme.color.headerBackground
         anchors.top: parent.top
         anchors.right: parent.right
         anchors.left: parent.left
@@ -28,12 +30,12 @@ Page {
         Text {
             id: headerTxt
             elide: Text.ElideRight
-            color: Theme.colors["default"].headerText
-            anchors.leftMargin: 20
+            color: theme.color.headerText
+            anchors.leftMargin: theme.padding.large
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             font.bold: true
-            font.pixelSize: 20
+            font.pixelSize: theme.font.large
         }
     }
 }
