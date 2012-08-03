@@ -86,98 +86,23 @@ BasePage {
     Component {
         id: accountsDelegate
 
-        Item {
+        SmallListItem {
             id: listItem
-            height: theme.size.smallListItemHeight
             width: accountsList.width
 
-            Rectangle {
-                id: itemRectangle
+            onClicked:  {
+                var account = accountsModel.get(index);
+                projectsPage.accountId = account.id;
+                projectsPage.accountName = account.name;
+                projectsPage.accountUrl = account.url;
+                pageStack.push(projectsPage);
+            }
 
-                anchors.fill: parent
-                border.width: 1
-                border.color: theme.color.normalText
-                gradient: theme.gradient.listItemNormal
-                states: [
-                    State {
-                        name: "pressed"
-
-                        PropertyChanges {
-                            target: highlightRectangle
-                            opacity: 1.0
-                        }
-                    }
-                ]
-
-                Rectangle {
-                    id: highlightRectangle
-
-                    opacity: 0.0
-                    anchors.fill: parent
-                    border.width: 1
-                    border.color: theme.color.normalText
-                    gradient: Gradient {
-                        GradientStop {
-                            position: 0.00
-                            color: "red"
-                        }
-                        GradientStop {
-                            position: 1.00
-                            color: "blue"
-                        }
-                    }
-                }
-
-                Text {
-                    id: nameText
-                    text: name
-                    anchors.right: indicatorImage.left
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    elide: Text.ElideRight
-                    anchors.leftMargin: theme.padding.large
-                    verticalAlignment: Text.AlignVCenter
-                    color: theme.color.normalText
-                }
-
-                Image {
-                    id: indicatorImage
-                    width: sourceSize.width
-                    height: sourceSize.height
-                    anchors.rightMargin: theme.padding.medium
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "images/icon-list-indicator-blue.svg"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onPressed: {
-                        itemRectangle.state = "pressed";
-                    }
-
-                    onReleased: {
-                        itemRectangle.state = "";
-                    }
-
-                    onClicked: {
-                        var account = accountsModel.get(index);
-                        projectsPage.accountId = account.id;
-                        projectsPage.accountName = account.name;
-                        projectsPage.accountUrl = account.url;
-                        pageStack.push(projectsPage);
-                    }
-
-                    onPressAndHold: {
-                        var account = accountsModel.get(index);
-                        accountsList.currentId = account.id;
-                        accountsList.currentIndex = index;
-                        accountMenu.open();
-                    }
-                }
-
+            onPressAndHold: {
+                var account = accountsModel.get(index);
+                accountsList.currentId = account.id;
+                accountsList.currentIndex = index;
+                accountMenu.open();
             }
         }
     }
@@ -209,5 +134,9 @@ BasePage {
             model: accountsModel
             delegate: accountsDelegate
         }
+    }
+
+    ScrollDecorator {
+        flickableItem: accountsList
     }
 }

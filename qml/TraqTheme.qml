@@ -62,5 +62,16 @@ Item {
                 color: "#eaeaea";
             }
         }
+
+        property Gradient listItemPressed: Gradient {
+            GradientStop {
+                position: 0.00;
+                color: "#e0e1e2";
+            }
+            GradientStop {
+                position: 1.00;
+                color: "#ebebec";
+            }
+        }
     }
 }

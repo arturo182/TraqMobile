@@ -50,7 +50,7 @@ BasePage {
     Flickable {
         id: formFlickable
         clip: true
-        contentHeight: formColumn.height * 1.5
+        contentHeight: formColumn.height * 1.2
         boundsBehavior: Flickable.StopAtBounds
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
@@ -120,5 +120,9 @@ BasePage {
                 width: parent.width
             }
         }
+    }
+
+    ScrollDecorator {
+        flickableItem: formFlickable
     }
 }

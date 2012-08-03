@@ -50,60 +50,22 @@ BasePage {
     Component {
         id: projectsDelegate
 
-        Item {
+        SmallListItem {
             id: listItem
-            height: theme.size.smallListItemHeight
             width: projectsList.width
 
-            Rectangle {
-                id: itemRectangle
+            onClicked: {
+                var project = projectsModel.get(index);
+                ticketsPage.accountId = accountId;
+                ticketsPage.projectName = project.name;
+                ticketsPage.projectSlug = project.slug;
+                pageStack.push(ticketsPage);
+            }
 
-                anchors.fill: parent
-                border.width: 1
-                border.color: theme.color.normalText
-                gradient: theme.gradient.listItemNormal
-
-                Text {
-                    id: nameText
-                    text: name
-                    anchors.right: indicatorImage.left
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    elide: Text.ElideRight
-                    anchors.leftMargin: 20
-                    verticalAlignment: Text.AlignVCenter
-                    color: theme.color.normalText
-                }
-
-                Image {
-                    id: indicatorImage
-                    width: sourceSize.width
-                    height: sourceSize.height
-                    anchors.rightMargin: 10
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "images/icon-list-indicator-blue.svg"
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-
-                    onClicked: {
-                        var project = projectsModel.get(index);
-                        ticketsPage.accountId = accountId;
-                        ticketsPage.projectName = project.name;
-                        ticketsPage.projectSlug = project.slug;
-                        pageStack.push(ticketsPage);
-                    }
-
-                    onPressAndHold: {
-                        //accountsList.currentId = account_id;
-                        //accountsList.currentIndex = index;
-                        //accountMenu.open();
-                    }
-                }
-
+            onPressAndHold: {
+                //accountsList.currentId = account_id;
+                //accountsList.currentIndex = index;
+                //accountMenu.open();
             }
         }
     }
@@ -135,5 +97,9 @@ BasePage {
             model: projectsModel
             delegate: projectsDelegate
         }
+    }
+
+    ScrollDecorator {
+        flickableItem: projectsList
     }
 }
