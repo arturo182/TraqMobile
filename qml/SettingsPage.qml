@@ -30,7 +30,7 @@ BasePage {
         boundsBehavior: Flickable.StopAtBounds
         flickableDirection: Flickable.VerticalFlick
         anchors.fill: parent
-        anchors.topMargin: theme.padding.large
+        anchors.topMargin: theme.size.headerHeight
 
         Column {
             id: formColumn
