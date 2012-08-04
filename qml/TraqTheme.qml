@@ -14,7 +14,7 @@ Item {
 
         property color darkText: "#000000"
         property color normalText: "#3478aa"
-        property color lightText: "#a6a6a6"
+        property color lightText: "#a9a9a9"
 
         property color headerBackground: "#3478aa"
         property color headerText: "#ffffff"
@@ -29,7 +29,7 @@ Item {
 
         property int large: 20
         property int medium: 14
-        property int small: 10
+        property int small: 11
     }
 
 
@@ -46,7 +46,7 @@ Item {
 
         property int headerHeight: 50
         property int smallListItemHeight: 50
-        property int largeListItemHeight: 70
+        property int largeListItemHeight: 75
     }
 
     QtObject {

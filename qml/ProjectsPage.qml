@@ -22,13 +22,13 @@ BasePage {
     tools: ToolBarLayout {
         ToolButton {
             flat: true
-            iconSource: "images/toolbar-back.svg"
+            iconSource: "images/toolbar_back.svg"
             onClicked: pageStack.pop()
         }
 
         ToolButton {
             flat: true
-            iconSource: "images/toolbar-refresh.svg"
+            iconSource: "images/toolbar_refresh.svg"
             onClicked: refreshProjects()
         }
     }

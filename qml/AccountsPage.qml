@@ -16,19 +16,19 @@ BasePage {
     tools: ToolBarLayout {
         ToolButton {
             flat: true
-            iconSource: "images/toolbar-back.svg"
+            iconSource: "images/toolbar_close.svg"
             onClicked: Qt.quit()
         }
 
         ToolButton {
             flat: true
-            iconSource: "images/toolbar-settings.svg"
+            iconSource: "images/toolbar_settings.svg"
             onClicked: pageStack.push(settingsPage)
         }
 
         ToolButton {
             flat: true
-            iconSource: "images/toolbar-add.svg"
+            iconSource: "images/toolbar_add.svg"
             onClicked: pageStack.push(newAccountPage)
         }
     }
